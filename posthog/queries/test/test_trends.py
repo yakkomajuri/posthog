@@ -1573,6 +1573,8 @@ def trend_test_factory(trends, event_factory, person_factory, action_factory, co
                     self.team,
                 )
             self.assertTrue(self._compare_entity_response(event_response, action_response,))
+            import ipdb;ipdb.set_trace()
+            self.assertEqual(event_response[0]["label"], "watched movie - all users")
             self.assertEqual(event_response[1]["label"], "watched movie - cohort2")
             self.assertEqual(event_response[2]["label"], "watched movie - cohort3")
             self.assertEqual(event_response[3]["label"], "watched movie - all users")

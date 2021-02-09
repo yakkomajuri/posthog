@@ -143,11 +143,11 @@ def _key_hash(query: str, args: Any) -> bytes:
     key = hashlib.md5(query.encode("utf-8") + json.dumps(args).encode("utf-8")).digest()
     return key
 
+substitute_params = (
+    ch_client.substitute_params if isinstance(ch_client, SyncClient) else ch_client._client.substitute_params
+)
 
 def format_sql(sql, params):
-    substitute_params = (
-        ch_client.substitute_params if isinstance(ch_client, SyncClient) else ch_client._client.substitute_params
-    )
 
     sql = substitute_params(sql, params or {})
     sql = sqlparse.format(sql, reindent_aligned=True)
