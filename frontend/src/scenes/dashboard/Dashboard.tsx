@@ -29,37 +29,22 @@ function _Dashboard({ id, shareToken }: Props): JSX.Element {
 }
 
 function DashboardView(): JSX.Element {
-    const {
-        dashboard,
-        itemsLoading,
-        items,
-        isOnSharedMode,
-        lastRefreshed,
-        isOnEditMode,
-        isOnFullScreenMode,
-        shareModalOpened,
-    } = useValues(dashboardLogic)
+    const { dashboard, itemsLoading, items, lastRefreshed, dashboardMode } = useValues(dashboardLogic)
     const { dashboardsLoading } = useValues(dashboardsModel)
-    const {
-        updateAndRefreshDashboard,
-        refreshAllDashboardItems,
-        setIsOnEditMode,
-        setIsOnFullScreenMode,
-        setShareModalOpened,
-    } = useActions(dashboardLogic)
+    const { updateAndRefreshDashboard, refreshAllDashboardItems, setDashboardMode } = useActions(dashboardLogic)
 
     const HOTKEYS = {
         e: {
-            action: () => setIsOnEditMode(!isOnEditMode, 'hotkey'),
-            disabled: isOnSharedMode,
+            action: () => setDashboardMode(dashboardMode === 'edit' ? null : 'edit', 'hotkey'),
+            disabled: dashboardMode !== null && dashboardMode !== 'edit',
         },
         f: {
-            action: () => setIsOnFullScreenMode(!isOnFullScreenMode, 'hotkey'),
-            disabled: isOnSharedMode,
+            action: () => setDashboardMode(dashboardMode === 'fullscreen' ? null : 'fullscreen', 'hotkey'),
+            disabled: dashboardMode !== null && dashboardMode !== 'fullscreen',
         },
         s: {
-            action: () => setShareModalOpened(!shareModalOpened),
-            disabled: isOnSharedMode,
+            action: () => setDashboardMode(dashboardMode === 'sharing' ? null : 'sharing', 'hotkey'),
+            disabled: dashboardMode !== null && dashboardMode !== 'sharing',
         },
     }
 
@@ -77,10 +62,8 @@ function DashboardView(): JSX.Element {
 
     return (
         <div className="dashboard">
-            {!isOnSharedMode && <DashboardHeader />}
-
+            {dashboardMode !== 'public' && <DashboardHeader />}
             <KeyboardHotkeys hotkeys={HOTKEYS} />
-
             {items && items.length ? (
                 <div>
                     <div className="dashboard-items-actions">
@@ -102,7 +85,7 @@ function DashboardView(): JSX.Element {
                             )}
                         />
                     </div>
-                    <DashboardItems inSharedMode={isOnSharedMode} />
+                    <DashboardItems inSharedMode={dashboardMode === 'public'} />
                 </div>
             ) : (
                 <p>
