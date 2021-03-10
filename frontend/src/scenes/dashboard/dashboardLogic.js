@@ -5,7 +5,7 @@ import { prompt } from 'lib/logic/prompt'
 import { router } from 'kea-router'
 import { toast } from 'react-toastify'
 import React from 'react'
-import { clearDOMTextSelection, toParams } from 'lib/utils'
+import { clearDOMTextSelection, toParams, triggerResizeAfterADelay } from 'lib/utils'
 import { dashboardItemsModel } from '~/models/dashboardItemsModel'
 import { PATHS_VIZ, ACTIONS_LINE_GRAPH_LINEAR } from 'lib/constants'
 import { ViewType } from 'scenes/insights/insightLogic'
@@ -28,6 +28,7 @@ export const dashboardLogic = kea({
         saveLayouts: true,
         updateItemColor: (id, color) => ({ id, color }),
         setIsOnEditMode: (isOnEditMode, source = null) => ({ isOnEditMode, source }),
+        setIsOnFullScreenMode: (newMode, source = null) => ({ newMode, source }),
         refreshAllDashboardItems: true,
         updateAndRefreshDashboard: true,
     }),
@@ -102,6 +103,12 @@ export const dashboardLogic = kea({
             null,
             {
                 updateContainerWidth: (_, { containerWidth }) => containerWidth,
+            },
+        ],
+        isOnFullScreenMode: [
+            false,
+            {
+                setIsOnFullScreenMode: (_, { newMode }) => newMode,
             },
         ],
         isOnEditMode: [
@@ -340,6 +347,10 @@ export const dashboardLogic = kea({
                 }
             }
             eventUsageLogic.actions.reportDashboardEditModeToggled(isOnEditMode, source)
+        },
+        setIsOnFullScreenMode: async ({ newMode, source }) => {
+            triggerResizeAfterADelay()
+            eventUsageLogic.actions.reportDashboardPresentationModeToggled(newMode, source)
         },
     }),
 })

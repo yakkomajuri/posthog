@@ -29,13 +29,27 @@ function _Dashboard({ id, shareToken }: Props): JSX.Element {
 }
 
 function DashboardView(): JSX.Element {
-    const { dashboard, itemsLoading, items, isOnSharedMode, lastRefreshed, isOnEditMode } = useValues(dashboardLogic)
+    const {
+        dashboard,
+        itemsLoading,
+        items,
+        isOnSharedMode,
+        lastRefreshed,
+        isOnEditMode,
+        isOnFullScreenMode,
+    } = useValues(dashboardLogic)
     const { dashboardsLoading } = useValues(dashboardsModel)
-    const { updateAndRefreshDashboard, refreshAllDashboardItems, setIsOnEditMode } = useActions(dashboardLogic)
+    const { updateAndRefreshDashboard, refreshAllDashboardItems, setIsOnEditMode, setIsOnFullScreenMode } = useActions(
+        dashboardLogic
+    )
 
     const HOTKEYS = {
         e: {
             action: () => setIsOnEditMode(!isOnEditMode, 'hotkey'),
+            disabled: isOnSharedMode,
+        },
+        f: {
+            action: () => setIsOnFullScreenMode(!isOnFullScreenMode, 'hotkey'),
             disabled: isOnSharedMode,
         },
     }
