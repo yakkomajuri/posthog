@@ -12,6 +12,7 @@ import { CalendarOutlined, ReloadOutlined } from '@ant-design/icons'
 import moment from 'moment'
 import { Button } from 'antd'
 import './Dashboard.scss'
+import { KeyboardHotkeys } from 'lib/components/KeyboardHotkeys'
 
 interface Props {
     id: string
@@ -28,9 +29,16 @@ function _Dashboard({ id, shareToken }: Props): JSX.Element {
 }
 
 function DashboardView(): JSX.Element {
-    const { dashboard, itemsLoading, items, isOnSharedMode, lastRefreshed } = useValues(dashboardLogic)
+    const { dashboard, itemsLoading, items, isOnSharedMode, lastRefreshed, isOnEditMode } = useValues(dashboardLogic)
     const { dashboardsLoading } = useValues(dashboardsModel)
-    const { updateAndRefreshDashboard, refreshAllDashboardItems } = useActions(dashboardLogic)
+    const { updateAndRefreshDashboard, refreshAllDashboardItems, setIsOnEditMode } = useActions(dashboardLogic)
+
+    const HOTKEYS = {
+        e: {
+            action: () => setIsOnEditMode(!isOnEditMode, 'hotkey'),
+            disabled: isOnSharedMode,
+        },
+    }
 
     if (dashboardsLoading || itemsLoading) {
         return <SceneLoading />
@@ -47,6 +55,8 @@ function DashboardView(): JSX.Element {
     return (
         <div className="dashboard">
             {!isOnSharedMode && <DashboardHeader />}
+
+            <KeyboardHotkeys hotkeys={HOTKEYS} />
 
             {items && items.length ? (
                 <div>
