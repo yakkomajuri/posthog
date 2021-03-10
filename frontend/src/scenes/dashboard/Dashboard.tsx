@@ -37,11 +37,16 @@ function DashboardView(): JSX.Element {
         lastRefreshed,
         isOnEditMode,
         isOnFullScreenMode,
+        shareModalOpened,
     } = useValues(dashboardLogic)
     const { dashboardsLoading } = useValues(dashboardsModel)
-    const { updateAndRefreshDashboard, refreshAllDashboardItems, setIsOnEditMode, setIsOnFullScreenMode } = useActions(
-        dashboardLogic
-    )
+    const {
+        updateAndRefreshDashboard,
+        refreshAllDashboardItems,
+        setIsOnEditMode,
+        setIsOnFullScreenMode,
+        setShareModalOpened,
+    } = useActions(dashboardLogic)
 
     const HOTKEYS = {
         e: {
@@ -50,6 +55,10 @@ function DashboardView(): JSX.Element {
         },
         f: {
             action: () => setIsOnFullScreenMode(!isOnFullScreenMode, 'hotkey'),
+            disabled: isOnSharedMode,
+        },
+        s: {
+            action: () => setShareModalOpened(!shareModalOpened),
             disabled: isOnSharedMode,
         },
     }
