@@ -602,3 +602,4 @@ export type Keys =
     | 'x'
     | 'y'
     | 'z'
+    | 'escape'
