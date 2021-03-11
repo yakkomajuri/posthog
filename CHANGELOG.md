@@ -1,5 +1,14 @@
 # Changelog
 
+### 1.22.1 - Thursday 11 March 2021
+
+#### Bugfixes
+
+- Fixed a bug with async event matching ([#3626](https://github.com/PostHog/posthog/pull/3626/files))
+- Fixed a bug with webhooks that stopped working ([#3621](https://github.com/PostHog/posthog/pull/3621/files), [#233](https://github.com/PostHog/plugin-server/pull/233))
+- Fixed a plugin server connection issue on Heroku ([#239](https://github.com/PostHog/plugin-server/pull/239)) 
+- Fixed retention time range issues on dashboards
+
 ### 1.22.0 - Wednesday 3 March 2021
 
 #### Important Announcement for Self-Hosted Users
