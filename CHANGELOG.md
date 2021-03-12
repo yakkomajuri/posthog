@@ -1,5 +1,7 @@
 # Changelog
 
+test
+
 ### 1.22.0 - Wednesday 3 March 2021
 
 #### Important Announcement for Self-Hosted Users
