@@ -164,7 +164,7 @@ else:
 ASYNC_EVENT_ACTION_MAPPING = get_from_env("ASYNC_EVENT_ACTION_MAPPING", False, type_cast=strtobool)
 
 # Enable if ingesting with the plugin server into postgres, as it's not able to calculate the mapping on the fly
-if PLUGIN_SERVER_INGESTION and PRIMARY_DB == RDBMS.POSTGRES:
+if PRIMARY_DB == RDBMS.POSTGRES:
     ASYNC_EVENT_ACTION_MAPPING = True
 
 
