@@ -13,6 +13,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "justpointme",
+      "name": "justpointme",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57345554?v=4",
+      "profile": "https://github.com/justpointme",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
