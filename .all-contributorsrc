@@ -12,7 +12,8 @@
       "profile": "https://github.com/localcurrency",
       "contributions": [
         "infra",
-        "test"
+        "test",
+        "code"
       ]
     }
   ],
